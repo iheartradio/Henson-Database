@@ -1,0 +1,2 @@
+ingestion.service==0.2.0
+python-decouple==2.3
