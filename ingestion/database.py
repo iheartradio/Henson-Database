@@ -78,7 +78,7 @@ class Database:
     def Model(self):  # NOQA, not really serving as a function
         """Return the SQLAlchemy base declarative model."""
         if not self._model_base:
-            self._model_base = declarative_base(bind=self.engine)
+            self._model_base = declarative_base()
 
         return self._model_base
 
