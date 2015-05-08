@@ -2,6 +2,7 @@
 
 from contextlib import contextmanager
 
+from ingestion.service import registry
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -23,6 +24,35 @@ def from_settings(settings):
         k.replace('DATABASE_', '', 1).lower(): v
         for k, v in settings.items()
         if k.startswith('DATABASE_')}
+
+
+def get_app(app=None):
+    """Return an application.
+
+    If not application is provided through ``app``, the application
+    registry will be checked for the most recently registered
+    application.
+
+    Args:
+        app (:class:`~ingestion.service.Application`, optional): An
+          application that will be returned if provided.
+
+    Returns:
+        :class:`~ingestion.service.Application`: The application
+
+    Raises:
+        RuntimeError: There is no application.
+    """
+    if app is not None:
+        return app
+
+    app = registry.current_application
+    if app is not None:
+        return app
+
+    raise RuntimeError(
+        'The database is not registered to an application and no '
+        'application is available.')
 
 
 def to_settings(settings):
@@ -70,7 +100,8 @@ class Database:
     def engine(self):
         """Return the SQLAlchemy engine."""
         if not self._engine:
-            self._engine = create_engine(connection_url(self.app.settings))
+            app = get_app(self.app)
+            self._engine = create_engine(connection_url(app.settings))
 
         return self._engine
 

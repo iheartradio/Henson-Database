@@ -6,6 +6,7 @@ setup(
     namespace_packages=['ingestion'],
     packages=find_packages(exclude=['tests']),
     install_requires=[
+        'ingestion.service>=0.3.0',
         'setuptools',
         'SQLAlchemy>=1.0.2',
     ],
