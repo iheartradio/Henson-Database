@@ -1,4 +1,4 @@
-"""Database utilities."""
+"""Database plugin for the Ingestion Pipeline."""
 
 from contextlib import contextmanager
 
