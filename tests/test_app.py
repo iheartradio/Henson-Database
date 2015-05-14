@@ -2,7 +2,7 @@
 
 import pytest
 
-from ingestion.database import get_app
+from henson_database import get_app
 
 
 def test_get_app_with_app():

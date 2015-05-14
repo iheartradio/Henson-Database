@@ -1,6 +1,6 @@
 """Test utiltities."""
 
-from ingestion.service import registry
+from henson.base import registry
 import pytest
 
 

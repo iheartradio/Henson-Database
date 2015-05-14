@@ -2,7 +2,7 @@
 
 import logging
 
-from ingestion.database import Database
+from henson_database import Database
 
 
 def test_engine(test_app):

@@ -1,6 +1,6 @@
 """Test converting to and from settings."""
 
-from ingestion.database import from_settings, to_settings
+from henson_database import from_settings, to_settings
 
 
 def test_from_settings():

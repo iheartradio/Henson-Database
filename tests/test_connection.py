@@ -1,6 +1,6 @@
 """Test connection-related functionality."""
 
-from ingestion.database import connection_url
+from henson_database import connection_url
 
 
 def test_connection_url():
