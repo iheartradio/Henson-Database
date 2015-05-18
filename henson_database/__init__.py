@@ -1,8 +1,8 @@
-"""Database plugin for the Ingestion Pipeline."""
+"""Database plugin for Henson."""
 
 from contextlib import contextmanager
 
-from ingestion.service import registry
+from henson.base import registry
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -34,11 +34,11 @@ def get_app(app=None):
     application.
 
     Args:
-        app (:class:`~ingestion.service.Application`, optional): An
-          application that will be returned if provided.
+        app (:class:`~henson.Application`, optional): An application
+          that will be returned if provided.
 
     Returns:
-        :class:`~ingestion.service.Application`: The application
+        :class:`~henson.Application`: The application.
 
     Raises:
         RuntimeError: There is no application.
