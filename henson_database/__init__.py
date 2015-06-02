@@ -2,7 +2,7 @@
 
 from contextlib import contextmanager
 
-from henson.base import registry
+from henson import current_application
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -29,9 +29,8 @@ def from_settings(settings):
 def get_app(app=None):
     """Return an application.
 
-    If not application is provided through ``app``, the application
-    registry will be checked for the most recently registered
-    application.
+    If not application is provided through ``app``, the current
+    application will be loaded from Henson's registry.
 
     Args:
         app (:class:`~henson.Application`, optional): An application
@@ -46,8 +45,8 @@ def get_app(app=None):
     if app is not None:
         return app
 
-    app = registry.current_application
-    if app is not None:
+    app = current_application
+    if app:
         return app
 
     raise RuntimeError(
