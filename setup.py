@@ -5,8 +5,8 @@ setup(
     version='0.1.0',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'SQLAlchemy>=1.0.2',
         'Henson',
+        'SQLAlchemy>=1.0.2',
     ],
     tests_require=[
         'tox',
