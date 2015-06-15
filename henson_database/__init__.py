@@ -2,7 +2,6 @@
 
 from contextlib import contextmanager
 
-from henson import current_application
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -26,34 +25,6 @@ def from_settings(settings):
         if k.startswith('DATABASE_')}
 
 
-def get_app(app=None):
-    """Return an application.
-
-    If not application is provided through ``app``, the current
-    application will be loaded from Henson's registry.
-
-    Args:
-        app (:class:`~henson.Application`, optional): An application
-          that will be returned if provided.
-
-    Returns:
-        :class:`~henson.Application`: The application.
-
-    Raises:
-        RuntimeError: There is no application.
-    """
-    if app is not None:
-        return app
-
-    app = current_application
-    if app:
-        return app
-
-    raise RuntimeError(
-        'The database is not registered to an application and no '
-        'application is available.')
-
-
 def to_settings(settings):
     """Return a dict of application settings."""
     return {'DATABASE_{}'.format(k.upper()): v for k, v in settings.items()}
@@ -71,11 +42,11 @@ class Database:
 
     def __init__(self, app=None):
         """Initialize an instance."""
+        self._app = None
         self._engine = None
         self._model_base = None
         self._sessionmaker = None
 
-        self.app = app
         if app is not None:
             self.init_app(app)
 
@@ -95,12 +66,22 @@ class Database:
         if 'DATABASE' in app.settings:
             app.settings.update(to_settings(app.settings['DATABASE']))
 
+        self._app = app
+
+    @property
+    def app(self):
+        """Return the registered app."""
+        if not self._app:
+            raise RuntimeError(
+                'No application has been assigned to this instance. '
+                'init_app must be called before referencing instance.app.')
+        return self._app
+
     @property
     def engine(self):
         """Return the SQLAlchemy engine."""
         if not self._engine:
-            app = get_app(self.app)
-            self._engine = create_engine(connection_url(app.settings))
+            self._engine = create_engine(connection_url(self.app.settings))
 
         return self._engine
 
