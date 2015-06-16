@@ -2,6 +2,7 @@
 
 from contextlib import contextmanager
 
+from henson import Extension
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -30,7 +31,7 @@ def to_settings(settings):
     return {'DATABASE_{}'.format(k.upper()): v for k, v in settings.items()}
 
 
-class Database:
+class Database(Extension):
 
     """An interface to interact with a relational database.
 
@@ -42,40 +43,35 @@ class Database:
 
     def __init__(self, app=None):
         """Initialize an instance."""
-        self._app = None
         self._engine = None
         self._model_base = None
         self._sessionmaker = None
 
-        if app is not None:
-            self.init_app(app)
+        super().__init__(app)
+
+    DEFAULT_SETTINGS = {
+        'DATABASE_HOST': 'localhost',
+        'DATABASE_PORT': 1433,
+        'DATABASE_TYPE': 'mssql',
+        'DATABASE_DRIVER': 'pymssql',
+    }
 
     def init_app(self, app):
         """Initialize an application for use with the database.
+
+        If database settings are provided by app as a dict rather than
+        individual keys and values, expands them to the format expected by the
+        extension's internal create_engine call.
 
         Args:
             app: Application instance that has an attribute named
               settings that contains a mapping of settings needed to
               interact with the database.
         """
-        app.settings.setdefault('DATABASE_HOST', 'localhost')
-        app.settings.setdefault('DATABASE_PORT', 1433)
-        app.settings.setdefault('DATABASE_TYPE', 'mssql')
-        app.settings.setdefault('DATABASE_DRIVER', 'pymssql')
+        super().init_app(app)
 
         if 'DATABASE' in app.settings:
             app.settings.update(to_settings(app.settings['DATABASE']))
-
-        self._app = app
-
-    @property
-    def app(self):
-        """Return the registered app."""
-        if not self._app:
-            raise RuntimeError(
-                'No application has been assigned to this instance. '
-                'init_app must be called before referencing instance.app.')
-        return self._app
 
     @property
     def engine(self):

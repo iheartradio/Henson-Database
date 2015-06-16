@@ -1,6 +1,5 @@
 """Test utiltities."""
 
-from henson.base import registry
 import pytest
 
 
@@ -17,26 +16,9 @@ class Application:
         self.name = 'testing'
         self.settings = settings
 
-        # Register the app with the registry just like a real one would
-        # do.
-        registry.current_application = self
-
 
 @pytest.fixture
-def clean_up_registry(request):
-    """Clean up the application registry after the test is run."""
-    original = registry._applications
-    registry._applications = []
-
-    def teardown():
-        registry._applications = original
-    request.addfinalizer(teardown)
-
-    return registry
-
-
-@pytest.fixture
-def test_app(clean_up_registry):
+def test_app():
     """Return a test application."""
     app = Application(
         DATABASE_USERNAME='test',
