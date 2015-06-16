@@ -5,7 +5,7 @@ setup(
     version='0.2.0',
     packages=find_packages(exclude=['tests']),
     install_requires=[
-        'Henson',
+        'Henson>=0.2.0',
         'SQLAlchemy>=1.0.2',
     ],
     tests_require=[

@@ -1,7 +1,5 @@
 """Test Database."""
 
-import logging
-
 from henson_database import Database
 
 
