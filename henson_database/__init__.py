@@ -75,7 +75,7 @@ class Database(Extension):
 
     @property
     def engine(self):
-        """Return the SQLAlchemy engine."""
+        """Return the :class:`~sqlalchemy.engine.Engine`."""
         if not self._engine:
             self._engine = create_engine(connection_url(self.app.settings))
 
@@ -83,7 +83,7 @@ class Database(Extension):
 
     @property
     def Model(self):  # NOQA, not really serving as a function
-        """Return the SQLAlchemy base declarative model."""
+        """Return the :func:`~sqlalchemy.ext.declarative.declarative_base`."""
         if not self._model_base:
             self._model_base = declarative_base()
 
@@ -91,10 +91,10 @@ class Database(Extension):
 
     @contextmanager
     def session(self):
-        """Return a context manager for a SQLAlchemy session.
+        """Yields a context manager for a SQLAlchemy session.
 
         Yields:
-            The session.
+            The :class:`~sqlalchemy.orm.session.Session`.
         """
         session = self.sessionmaker()
         try:
@@ -104,7 +104,7 @@ class Database(Extension):
 
     @property
     def sessionmaker(self):
-        """Return the SQLAlchemy session maker."""
+        """Return the :class:`~sqlalchemy.orm.session.sessionmaker`."""
         if not self._sessionmaker:
             self._sessionmaker = sessionmaker(bind=self.engine)
 
