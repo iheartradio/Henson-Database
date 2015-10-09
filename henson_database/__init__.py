@@ -1,6 +1,7 @@
 """Database plugin for Henson."""
 
 from contextlib import contextmanager
+from pkg_resources import get_distribution
 
 from henson import Extension
 from sqlalchemy import create_engine
@@ -8,6 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 __all__ = ('Database',)
+__version__ = get_distribution(__package__).version
 
 
 def connection_url(settings):
@@ -32,7 +34,6 @@ def to_settings(settings):
 
 
 class Database(Extension):
-
     """An interface to interact with a relational database.
 
     Args:
@@ -91,7 +92,7 @@ class Database(Extension):
 
     @contextmanager
     def session(self):
-        """Yields a context manager for a SQLAlchemy session.
+        """Yield a context manager for a SQLAlchemy session.
 
         Yields:
             The :class:`~sqlalchemy.orm.session.Session`.
