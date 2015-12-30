@@ -83,6 +83,11 @@ class Database(Extension):
         return self._engine
 
     @property
+    def metadata(self):
+        """Return the :class:`~sqlalchemy.MetaData` instance."""
+        return self.Model.metadata
+
+    @property
     def Model(self):  # NOQA, not really serving as a function
         """Return the :func:`~sqlalchemy.ext.declarative.declarative_base`."""
         if not self._model_base:
