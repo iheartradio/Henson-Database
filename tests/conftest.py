@@ -4,7 +4,6 @@ import pytest
 
 
 class Application:
-
     """A stub application that can be used for testing.
 
     Args:

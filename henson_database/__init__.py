@@ -13,7 +13,14 @@ __version__ = get_distribution(__package__).version
 
 
 def connection_url(settings):
-    """Return a SQLAlchemy database URI."""
+    """Return a SQLAlchemy database URI.
+
+    Args:
+        settings (dict): An application's settings.
+
+    Returns:
+        str: The database connection URL.
+    """
     settings = from_settings(settings)
     template = \
         '{type}+{driver}://{username}:{password}@{host}:{port}/{database}'
@@ -21,7 +28,15 @@ def connection_url(settings):
 
 
 def from_settings(settings):
-    """Return a dict created from application settings."""
+    """Return a dict created from application settings.
+
+    Args:
+        settings (dict): An application's settings.
+
+    Returns:
+        dict: The database-specific settings, formatted to use with
+            :func:`connection_url`.
+    """
     return {
         k.replace('DATABASE_', '', 1).lower(): v
         for k, v in settings.items()
@@ -29,7 +44,15 @@ def from_settings(settings):
 
 
 def to_settings(settings):
-    """Return a dict of application settings."""
+    """Return a dict of application settings.
+
+    Args:
+        settings (dict): Database-specific settings, formatted to use
+            with :func:`connection_url`.
+
+    Returns:
+        dict: Application-level settings.
+    """
     return {'DATABASE_{}'.format(k.upper()): v for k, v in settings.items()}
 
 
@@ -37,9 +60,9 @@ class Database(Extension):
     """An interface to interact with a relational database.
 
     Args:
-        app (optional): An application instance that has an attribute
-          named settings that contains a mapping of settings to interact
-          with a database.
+        app (Optional[henson.base.Application]): An application instance
+            that has an attribute named settings that contains a mapping
+            of settings to interact with a database.
     """
 
     def __init__(self, app=None):
@@ -65,9 +88,9 @@ class Database(Extension):
         extension's internal create_engine call.
 
         Args:
-            app: Application instance that has an attribute named
-              settings that contains a mapping of settings needed to
-              interact with the database.
+            app (henson.base.Application): Application instance that has
+                an attribute named settings that contains a mapping of
+                settings needed to interact with the database.
         """
         super().init_app(app)
 
@@ -76,7 +99,11 @@ class Database(Extension):
 
     @property
     def engine(self):
-        """Return the :class:`~sqlalchemy.engine.Engine`."""
+        """Return the engine.
+
+        Returns:
+            sqlalchemy.engine.Engine: The engine.
+        """
         if not self._engine:
             self._engine = create_engine(connection_url(self.app.settings))
 
@@ -84,12 +111,21 @@ class Database(Extension):
 
     @property
     def metadata(self):
-        """Return the :class:`~sqlalchemy.MetaData` instance."""
+        """Return the metadata associated with ``db.Model``.
+
+        Returns:
+            sqlalchemy.MetaData: The metadata.
+        """
         return self.Model.metadata
 
     @property
     def Model(self):  # NOQA, not really serving as a function
-        """Return the :func:`~sqlalchemy.ext.declarative.declarative_base`."""
+        """Return a base class for creating models.
+
+        Returns:
+            sqlalchemy.ext.declarative.declarative_base: The base class
+                to use for creating new models.
+        """
         if not self._model_base:
             self._model_base = declarative_base()
 
@@ -100,7 +136,7 @@ class Database(Extension):
         """Yield a context manager for a SQLAlchemy session.
 
         Yields:
-            The :class:`~sqlalchemy.orm.session.Session`.
+            sqlalchemy.orm.session.Session: A new session instance.
         """
         session = self.sessionmaker()
         try:
@@ -110,7 +146,11 @@ class Database(Extension):
 
     @property
     def sessionmaker(self):
-        """Return the :class:`~sqlalchemy.orm.session.sessionmaker`."""
+        """Return a function to get a new session.
+
+        Returns:
+            callable: A function that can be used to get a new session.
+        """
         if not self._sessionmaker:
             self._sessionmaker = sessionmaker(bind=self.engine)
 
