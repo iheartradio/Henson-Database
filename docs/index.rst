@@ -4,6 +4,17 @@ Henson-Database
 
 Provides SQLAlchemy support to Henson Applications.
 
+Installation
+============
+
+You can install Henson-Database using Pip::
+
+    $ python -m pip install henso-databasen
+
+You can also install it from source::
+
+    $ python setup.py install
+
 Quickstart
 ==========
 
