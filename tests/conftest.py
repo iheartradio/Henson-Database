@@ -20,8 +20,6 @@ class Application:
 def test_app():
     """Return a test application."""
     app = Application(
-        DATABASE_USERNAME='test',
-        DATABASE_PASSWORD='test',
-        DATABASE_DATABASE='test',
+        DATABASE_URI='sqlite://',
     )
     return app
