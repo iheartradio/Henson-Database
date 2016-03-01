@@ -65,6 +65,10 @@ class Database(Extension):
             of settings to interact with a database.
     """
 
+    REQUIRED_SETTINGS = (
+        'DATABASE_URI',
+    )
+
     def __init__(self, app=None):
         """Initialize an instance."""
         self._engine = None
@@ -72,13 +76,6 @@ class Database(Extension):
         self._sessionmaker = None
 
         super().__init__(app)
-
-    DEFAULT_SETTINGS = {
-        'DATABASE_HOST': 'localhost',
-        'DATABASE_PORT': 1433,
-        'DATABASE_TYPE': 'mssql',
-        'DATABASE_DRIVER': 'pymssql',
-    }
 
     def init_app(self, app):
         """Initialize an application for use with the database.
@@ -105,7 +102,7 @@ class Database(Extension):
             sqlalchemy.engine.Engine: The engine.
         """
         if not self._engine:
-            self._engine = create_engine(connection_url(self.app.settings))
+            self._engine = create_engine(self.app.settings['DATABASE_URI'])
 
         return self._engine
 

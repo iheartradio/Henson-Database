@@ -25,18 +25,9 @@ The following settings are used by Henson-Database. See `Engine Configuration
 <http://docs.sqlalchemy.org/en/latest/core/engines.html>`_ for full information
 on SQLAlchemy database URIs.
 
-=====================   =======================================================
-``DATABASE_DRIVER``     The Python driver used to connect to the database.
-                        default: `'pymssql'`
-``DATABASE_HOST``       The hostname to use in the SQLAlchemy database URI.
-                        default: `'localhost'`
-``DATABASE_PASSWORD``   default: `None`
-``DATABASE_PORT``       The port the database server is listening on.
-                        default: `1443`
-``DATABASE_USERNAME``   default: `None`
-``DATABASE_TYPE``       The database application.
-                        default: `'mssql'`
-=====================   =======================================================
+================   ============================================================
+``DATABASE_URI``   The URI to use to connect to the database.
+================   ============================================================
 
 Contents:
 
