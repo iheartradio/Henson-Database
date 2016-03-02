@@ -1,7 +1,7 @@
 Version 0.3.0
 -------------
 
-Release TBD
+Released 2016-03-02
 
 - Switch from individual connection settings to ``DATABASE_URI`` (*Backwards
   incompatible*)
