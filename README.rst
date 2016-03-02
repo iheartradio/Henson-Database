@@ -3,7 +3,7 @@ Henson-Database |build status|
 ##############################
 
 .. |build status| image:: https://travis-ci.org/iheartradio/Henson-Database.svg?branch=master
-   :target: https://travis-ci.org/iheartradio/Henso-Databasen
+   :target: https://travis-ci.org/iheartradio/Henson-Database
 
 A library for using SQLAlchemy with a Henson application.
 
