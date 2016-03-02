@@ -1,7 +1,8 @@
 """Database plugin for Henson."""
 
 from contextlib import contextmanager
-from pkg_resources import get_distribution
+import os
+import pkg_resources
 
 from henson import Extension
 from sqlalchemy import create_engine
@@ -9,22 +10,17 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 __all__ = ('Database',)
-__version__ = get_distribution(__package__).version
 
-
-def connection_url(settings):
-    """Return a SQLAlchemy database URI.
-
-    Args:
-        settings (dict): An application's settings.
-
-    Returns:
-        str: The database connection URL.
-    """
-    settings = from_settings(settings)
-    template = \
-        '{type}+{driver}://{username}:{password}@{host}:{port}/{database}'
-    return template.format(**settings)
+try:
+    _dist = pkg_resources.get_distribution(__package__)
+    if not __file__.startswith(os.path.join(_dist.location, __package__)):
+        # Manually raise the exception if there is a distribution but
+        # it's installed from elsewhere.
+        raise pkg_resources.DistributionNotFound
+except pkg_resources.DistributionNotFound:
+    __version__ = 'development'
+else:
+    __version__ = _dist.version
 
 
 def from_settings(settings):
