@@ -46,6 +46,7 @@ Contents:
    :maxdepth: 1
 
    api
+   migrations
    changes
 
 
