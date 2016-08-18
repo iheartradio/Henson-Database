@@ -1,5 +1,3 @@
-settings.ini
-
 # https://github.com/github/gitignore/blob/b8da0e3a89f5d75acdb9d5fed06700bfff3695f9/Python.gitignore
 # Byte-compiled / optimized / DLL files
 __pycache__/
