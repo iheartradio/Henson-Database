@@ -23,7 +23,7 @@ setup(
     version='0.4.0',
     author='Andy Dirnberger, Jon Banafato, and others',
     author_email='henson@iheart.com',
-    url='https://henson-database.rtfd.org',
+    url='https://henson-database.readthedocs.io',
     description='A library for using SQLAlchemy with a Henson application',
     long_description=read('README.rst'),
     license='Apache License, Version 2.0',
