@@ -29,10 +29,17 @@ setup(
     license='Apache License, Version 2.0',
     packages=find_packages(exclude=['tests']),
     zip_safe=False,
+    include_package_data=True,
     install_requires=[
-        'Henson',
+        # 1.1 is required to extend the CLI.
+        'Henson>=1.1',
         'SQLAlchemy>=1.0.2',
     ],
+    extras_require={
+        'migrations': [
+            'alembic',
+        ],
+    },
     tests_require=[
         'pytest',
     ],

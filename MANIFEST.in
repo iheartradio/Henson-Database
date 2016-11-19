@@ -3,6 +3,7 @@ include LICENSE
 include README.rst
 
 recursive-include docs Makefile *.py *.rst
+recursive-include henson_database/templates *.mako *.py
 
 exclude .coveragerc
 exclude .travis.yml

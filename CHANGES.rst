@@ -3,6 +3,8 @@ Version 0.4.0
 
 Release TBD
 
+- Support migrations through the Henson CLI
+
 Version 0.3.0
 -------------
 
