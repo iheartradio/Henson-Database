@@ -1,7 +1,12 @@
-Version 0.4.0
+Version 0.5.0
 -------------
 
 Release TBD
+
+Version 0.4.0
+-------------
+
+Released 2017-02-21
 
 - Support migrations through the Henson CLI
 
