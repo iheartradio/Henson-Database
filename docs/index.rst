@@ -9,7 +9,7 @@ Installation
 
 You can install Henson-Database using Pip::
 
-    $ python -m pip install henso-databasen
+    $ python -m pip install henson-database
 
 You can also install it from source::
 
@@ -24,7 +24,7 @@ Quickstart
     from henson_database import Database
 
     app = Henson(__name__)
-    database = Database(app)
+    db = Database(app)
 
     with db.session() as session:
         session.execute('SELECT 1;')

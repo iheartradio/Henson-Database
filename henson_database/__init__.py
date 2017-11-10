@@ -47,6 +47,7 @@ def from_settings(settings):
     Returns:
         dict: The database-specific settings, formatted to use with
             :func:`connection_url`.
+
     """
     return {
         k.replace('DATABASE_', '', 1).lower(): v
@@ -63,6 +64,7 @@ def to_settings(settings):
 
     Returns:
         dict: Application-level settings.
+
     """
     return {'DATABASE_{}'.format(k.upper()): v for k, v in settings.items()}
 
@@ -119,6 +121,7 @@ class Database(Extension):
 
         Returns:
             sqlalchemy.engine.Engine: The engine.
+
         """
         if not self._engine:
             self._engine = create_engine(self.app.settings['DATABASE_URI'])
@@ -131,6 +134,7 @@ class Database(Extension):
 
         Returns:
             sqlalchemy.MetaData: The metadata.
+
         """
         return self.Model.metadata
 
@@ -185,6 +189,7 @@ class Database(Extension):
 
         Yields:
             sqlalchemy.orm.session.Session: A new session instance.
+
         """
         session = self.sessionmaker()
         try:
@@ -198,6 +203,7 @@ class Database(Extension):
 
         Returns:
             callable: A function that can be used to get a new session.
+
         """
         if not self._sessionmaker:
             self._sessionmaker = sessionmaker(bind=self.engine)
