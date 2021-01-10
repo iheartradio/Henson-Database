@@ -21,7 +21,7 @@ def read(filename):
 setup(
     name='Henson-Database',
     version='0.5.0',
-    author='Andy Dirnberger, Jon Banafato, and others',
+    author='Andy Dirnberger, Jon Banafato, Leonard Bedner, and others',
     author_email='henson@iheart.com',
     url='https://henson-database.readthedocs.io',
     description='A library for using SQLAlchemy with a Henson application',
@@ -53,9 +53,8 @@ setup(
         'Natural Language :: English',
         'Operating System :: POSIX',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ]
