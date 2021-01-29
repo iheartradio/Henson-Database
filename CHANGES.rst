@@ -1,7 +1,9 @@
 Version 0.5.0
 -------------
 
-Release TBD
+Released 2021-01-29
+
+- Drop support for Python < 3.8, add support for Python >= 3.8
 
 Version 0.4.0
 -------------
